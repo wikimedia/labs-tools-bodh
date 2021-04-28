@@ -29,30 +29,57 @@ function PropertyWidget({ pItem, itemId }) {
     const [options, setOptions] = useState([])
 
     const onTypheadKeyPress = (e) => {
-        if( e.target.value.length < 2 ) return
-        // For wikidata item or lemexe, load the options
+        const newValue = e.target.value
+
+        // Wait for minimum 2 character
+        if (newValue.length < 2) return
+
+        // For wikidata item or lemexe
         if (pItem.type === 'wikibase-lexeme' || pItem.type === 'wikibase-item') {
-            const t = pItem.type === 'wikibase-lexeme' ? 'lexeme' : 'item'
-            wdSiteApi.get(
-                '/api.php?action=wbsearchentities&format=json&language=en&type=' + t + '&origin=*&search=' + e.target.value
-            )
+
+            // Check whether user is typed L or Q item directly or not
+            const regex = /(L|Q)(\d+)/gm;
+            let matches = regex.exec(newValue)
+            if (matches != null) {
+
+                // If it L or Q item then wait for Enter key and edit claim directly
+                if (e.key === "Enter") {
+                    if ((matches[1] === "L") && (pItem.type === 'wikibase-item')) {
+                        alert("Lexeme item is not allowed in Q item column.")
+                        return
+                    }
+                    if ((matches[1] === "Q") && pItem.type === 'wikibase-lexeme') {
+                        alert("Q item is not allowed in Lexeme item column.")
+                        return
+                    }
+                    onEditClaim(matches[0])
+                }
+            } else {
+                const t = pItem.type === 'wikibase-lexeme' ? 'lexeme' : 'item'
+                wdSiteApi.get(
+                    '/api.php?action=wbsearchentities&format=json&language=en&type=' + t + '&origin=*&search=' + newValue
+                )
                 .then(({ data }) => {
                     setOptions(data.search)
                 })
+            }
         }
 
         // Property having string nature can be edit by Enter
         if (e.key === "Enter" && pItem.type === "string") {
-            dispatch(setBackdrop(true))
-            dispatch(editClaim(itemId, pItem, e.target.value)).then(({ status, value }) => {
-                if (status) {
-                    console.log(value)
-                    setEditMode(false)
-                    setItemText(value)
-                    setItemValue(value)
-                }
-            })
+            onEditClaim(newValue)
         }
+    }
+
+    const onEditClaim = (val) => {
+        dispatch(setBackdrop(true))
+        dispatch(editClaim(itemId, pItem, val)).then(({ status, value }) => {
+            if (status) {
+                setEditMode(false)
+                setItemText(value)
+                setItemValue(value)
+            }
+        })
     }
 
     const onOptionSelected = (op) => {
@@ -73,7 +100,7 @@ function PropertyWidget({ pItem, itemId }) {
     const getCellContent = () => {
         if (pItem.type === "string" || pItem.type === "wikibase-item" || pItem.type === "wikibase-lexeme") {
             return <>
-                <input disabled value={itemText} />
+                <input disabled value={itemText} className="propertyCellInput" />
                 <div style={{ marginLeft: -30, display: 'inline', zIndex: 999 }}>
                     <b style={{ marginRight: 3, cursor: 'pointer' }} onClick={() => setEditMode(true)}>&#9998;</b>
                     <b style={{ marginRight: 3, cursor: 'pointer', color: 'red' }} onClick={onDeleteClaim}>✘</b>

@@ -20,18 +20,43 @@ function EditorWidget({ itemId, pItem }) {
     const dispatch = useDispatch();
 
     const onTypheadKeyPress = (e) => {
-        if( e.target.value.length < 2 ) return
+        const newValue = e.target.value
+
+        // Wait for minimum 2 character
+        if( newValue.length < 2 ) return
 
         if (pItem.type === 'wikibase-lexeme' || pItem.type === 'wikibase-item') {
-            const tp = pItem.type === 'wikibase-lexeme' ? 'lexeme' : 'item'
-            wdSiteApi.get(
-                '/api.php?action=wbsearchentities&format=json&language=en&type=' + tp + '&origin=*&search=' + e.target.value
-            )
+
+            // Check whether user is typed L or Q item directly or not
+            const regex = /(L|Q)(\d+)/gm;
+            let matches = regex.exec(newValue)
+            if( matches != null) {
+
+                // If it L or Q item then wait for Enter key and create claim directly
+                if( e.key === "Enter" ){
+                    if( (matches[1] === "L") && (pItem.type === 'wikibase-item') ) {
+                        alert("Lexeme item is not allowed in Q item column.")
+                        return
+                    }
+                    if( (matches[1] === "Q") && pItem.type === 'wikibase-lexeme' ){
+                        alert("Q item is not allowed in Lexeme item column.")
+                        return
+                    }
+                    createClaimById(matches[0], pItem.type);
+                }
+            } else {
+                // If text does not type L or Q item then take search from wikidata
+                // and show them options
+                const tp = pItem.type === 'wikibase-lexeme' ? 'lexeme' : 'item'
+                wdSiteApi.get(
+                    '/api.php?action=wbsearchentities&format=json&language=en&type=' + tp + '&origin=*&search=' + newValue
+                )
                 .then(({ data }) => {
                     setOptions(data.search)
                 })
+            }
         } else if (pItem.type === 'string' && e.key === 'Enter') {
-            createClaimById(e.target.value, pItem.type);
+            createClaimById(newValue, pItem.type);
         }
     }
 
