@@ -6,7 +6,8 @@ import {
     SET_DT_PROGRESS,
     SET_BD_PROGRESS,
     SET_LEX_ITEMS,
-    SET_LEXITEM_DATA
+    SET_LEXITEM_DATA,
+    SET_INPUT_LANG
 } from './../constants';
 
 const reducer = (state, action) => {
@@ -48,6 +49,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 lexItemsData: action.payload
+            }
+        case SET_INPUT_LANG:
+            return {
+                ...state,
+                inputLanguage: action.payload
             }
         default: return state
     }

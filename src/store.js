@@ -5,10 +5,11 @@ import rootReducer from './reducer';
 const INIT_STATE = {
     backdropProgress: false,
     currentUser: null,
-    propCol: [],
     dataTableProgress: false,
+    inputLanguage: 'en',
     lexItems: [],
-    lexItemsData: []
+    lexItemsData: [],
+    propCol: []
 }
 
 const store = createStore(rootReducer, INIT_STATE, compose(

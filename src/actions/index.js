@@ -13,9 +13,19 @@ import {
     SET_DT_PROGRESS,
     SET_BD_PROGRESS,
     SET_LEX_ITEMS,
-    SET_LEXITEM_DATA
+    SET_LEXITEM_DATA,
+    SET_INPUT_LANG
 } from './../constants';
 
+
+export function setInputLang(code) {
+    return (dispatch) => {
+        dispatch({
+            type: SET_INPUT_LANG,
+            payload: code
+        })
+    }
+}
 
 export function setBackdrop(bool) {
     return (dispatch) => {

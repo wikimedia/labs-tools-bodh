@@ -24,6 +24,7 @@ function PropertyWidget({ pItem, itemId }) {
     const [itemText, setItemText] = useState(itemDataValue)
     const [itemValue, setItemValue] = useState(itemDataValue)
     const [editMode, setEditMode] = useState(false)
+    const inputLanguage = useSelector( s => s.inputLanguage )
 
     // -----------   Typehead ------------
     const [options, setOptions] = useState([])
@@ -57,7 +58,7 @@ function PropertyWidget({ pItem, itemId }) {
             } else {
                 const t = pItem.type === 'wikibase-lexeme' ? 'lexeme' : 'item'
                 wdSiteApi.get(
-                    '/api.php?action=wbsearchentities&format=json&language=en&type=' + t + '&origin=*&search=' + newValue
+                    '/api.php?action=wbsearchentities&format=json&language='+inputLanguage+'&type=' + t + '&origin=*&search=' + newValue
                 )
                 .then(({ data }) => {
                     setOptions(data.search)

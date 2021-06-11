@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Component import
 import { Typeahead } from 'react-typeahead';
@@ -16,6 +16,7 @@ function EditorWidget({ itemId, pItem }) {
     // Typehead states
     const typeheadRef = useRef();
     const [options, setOptions] = useState([])
+    const inputLanguage = useSelector( s => s.inputLanguage )
 
     const dispatch = useDispatch();
 
@@ -49,7 +50,7 @@ function EditorWidget({ itemId, pItem }) {
                 // and show them options
                 const tp = pItem.type === 'wikibase-lexeme' ? 'lexeme' : 'item'
                 wdSiteApi.get(
-                    '/api.php?action=wbsearchentities&format=json&language=en&type=' + tp + '&origin=*&search=' + newValue
+                    '/api.php?action=wbsearchentities&format=json&language='+inputLanguage+'&type=' + tp + '&origin=*&search=' + newValue
                 )
                 .then(({ data }) => {
                     setOptions(data.search)

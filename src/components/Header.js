@@ -1,17 +1,34 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 import React, { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import GroupIcon from '@material-ui/icons/Group';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-import { setProfile } from './../actions';
+import { setProfile, setInputLang } from './../actions';
+import { allowedInputLanguage } from './../util';
+
+const useStyles = makeStyles((theme) => ({
+    clrWhite: {
+        color: "white"
+    }
+}));
 
 function Header() {
-    const currentUser = useSelector( s => s.currentUser )
+    const classes = useStyles();
+    const [ currentUser, inputLanguage ] = useSelector( s => [ s.currentUser, s.inputLanguage] )
     const dispatch = useDispatch()
+
+    const handleInputLangChange = (event) => {
+        dispatch( setInputLang(event.target.value) )
+    }
 
     useEffect( () => {
         dispatch( setProfile() )
@@ -45,6 +62,16 @@ function Header() {
                         <GroupIcon style={{ color: 'white' }}/>
                     </Button>
                 </div>
+                {currentUser ?
+                    <FormControl>
+                        <Select className={classes.clrWhite} value={inputLanguage} onChange={handleInputLangChange}>
+                            {allowedInputLanguage().map( (lang) => {
+                                return <MenuItem value={lang}>{lang}</MenuItem>
+                            })}
+                        </Select>
+                        <FormHelperText className={classes.clrWhite}>Input language</FormHelperText>
+                    </FormControl>
+                : null }
             </Toolbar>
         </AppBar>
     )

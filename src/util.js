@@ -173,3 +173,27 @@ export function deleteClaimInState(lexItemsData, id, p) {
 
     return temp
 }
+
+/**
+ * Return supported input language
+ * @return {array} List of language code
+ */
+ export function allowedInputLanguage() {
+    return [
+        'as',
+        'bn',
+        'de',
+        'en',
+        'fr',
+        'gu',
+        'hi',
+        'kn',
+        'ml',
+        'mr',
+        'or',
+        'pa',
+        'sa',
+        'ta',
+        'te'
+    ]
+}
