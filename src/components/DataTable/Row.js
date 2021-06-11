@@ -26,7 +26,7 @@ function Row({ index, itemId, type }) {
                         })
                         : null
                 }
-                <EditorWidget itemId={itemId} pItem={p}  />
+                <EditorWidget itemId={itemId} pItem={p} />
             </td>
         )
     }
@@ -43,6 +43,14 @@ function Row({ index, itemId, type }) {
         // Removed me: P5402 P1552
     }
 
+    const getLemmata = (item) => {
+        let temp = [];
+        Object.values(item.lemmas).forEach((i) => {
+            temp.push( i.value )
+        })
+        return temp.join( ", " )
+    }
+
     return (
         <tr key={index}>
             <td>
@@ -54,7 +62,7 @@ function Row({ index, itemId, type }) {
                     target="_blank"
                     rel="noreferrer"
                 >
-                    {item.lemmas[Object.keys(item.lemmas)[0]].value}
+                    {getLemmata(item)}
                 </a>
                 <br />
                 <span className="lexemeId">({itemId})</span>
