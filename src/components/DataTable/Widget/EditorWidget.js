@@ -76,6 +76,16 @@ function EditorWidget({ itemId, pItem }) {
 
     }
 
+    const widgetDisplayOption = (op) => {
+        try {
+            if (pItem.type === 'wikibase-lexeme') {
+                return op.label + ' (' + op.id + '; ' + op.match.language + ')'
+            }
+        }
+        catch (err) { }
+        return op.label + ' (' + op.id + ')'
+    }
+
     return (
         <Typeahead
             style={{ marginTop: 2 }}
@@ -83,7 +93,7 @@ function EditorWidget({ itemId, pItem }) {
             filterOption='label'
             maxVisible={10}
             onKeyUp={onTypheadKeyPress}
-            displayOption={(op) => op.label + ' (' + op.id + ')'}
+            displayOption={widgetDisplayOption}
             onOptionSelected={(op) => onOptionSelected(op)}
             ref={typeheadRef}
         />

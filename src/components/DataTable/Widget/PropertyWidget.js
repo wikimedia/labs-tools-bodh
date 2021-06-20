@@ -125,6 +125,17 @@ function PropertyWidget({ pItem, itemId }) {
 
         }
     }, [itemValue, pItem])
+
+    const widgetDisplayOption = (op) => {
+        try {
+            if (pItem.type === 'wikibase-lexeme') {
+                return op.label + ' (' + op.id + '; ' + op.match.language + ')'
+            }
+        }
+        catch (err) { }
+        return op.label + ' (' + op.id + ')'
+    }
+
     return (
         <>
             <div>
@@ -137,7 +148,7 @@ function PropertyWidget({ pItem, itemId }) {
                         maxVisible={10}
                         value={itemValue}
                         onKeyUp={onTypheadKeyPress}
-                        displayOption={(op) => op.label + ' (' + op.id + ')'}
+                        displayOption={widgetDisplayOption}
                         onOptionSelected={onOptionSelected}
                     />
                 }
