@@ -130,6 +130,8 @@ function PropertyWidget({ pItem, itemId }) {
         try {
             if (pItem.type === 'wikibase-lexeme') {
                 return op.label + ' (' + op.id + '; ' + op.match.language + ')'
+            } else if(pItem.type === "wikibase-item"){
+                return op.label + ' (' + op.id + '; ' + op.description + ')'
             }
         }
         catch (err) { }
