@@ -39,7 +39,7 @@ function Header() {
             <Toolbar>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="h4" style={{ padding: 0 }}>
-                        <a href="/" style={{ color: 'white', textDecoration: 'none' }}>bodh</a>
+                        <a href="/" style={{ color: 'white', textDecoration: 'none' }}>बोध</a>
                     </Typography>
                     <span style={{ fontSize: '0.7rem', margin: 0, padding: 0 }}>A tool that add sense to lexeme</span>
                 </div>
