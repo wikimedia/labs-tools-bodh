@@ -41,7 +41,7 @@ function Header() {
                     <Typography variant="h4" style={{ padding: 0 }}>
                         <a href="/" style={{ color: 'white', textDecoration: 'none' }}>बोध</a>
                     </Typography>
-                    <span style={{ fontSize: '0.7rem', margin: 0, padding: 0 }}>A tool that add sense to lexeme</span>
+                    <span style={{ fontSize: '0.7rem', margin: 0, padding: 0 }}>A tool that adds statements to lexemes, senses and forms.</span>
                 </div>
                 <div style={{ marginLeft: 'auto' }}>
                     {currentUser ?
