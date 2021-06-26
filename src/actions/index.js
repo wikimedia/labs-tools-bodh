@@ -2,7 +2,10 @@ import {
     getPropById,
     addClaimInState,
     editClaimInState,
-    deleteClaimInState
+    deleteClaimInState,
+    deleteSenseInState,
+    addSenseClaimInState,
+    editSenseClaimInState
 } from './../util';
 import backendApi from './../api/backendApi';
 import wdSiteApi from './../api/wikidataSiteApi';
@@ -114,7 +117,6 @@ export function setLexItems(item) {
 export function setLexItemsData() {
     return async (dispatch, getState) => {
         const { lexItems } = getState();
-        console.log(lexItems);
         const resp = await wdSiteApi.get('/api.php?action=wbgetentities&format=json&origin=*&ids=' + lexItems.join('|'))
         dispatch({
             type: SET_LEXITEM_DATA,
@@ -145,12 +147,19 @@ export function createClaim(itemId, pId, type, value) {
         dispatch(setBackdrop(false))
 
         if (resp.data["success"]) {
-            let { lexItemsData } = getState()
+            let { lexItemsData, workingOn } = getState()
+
+            let tempPayload;
+            if( workingOn === "property" ){
+                tempPayload = addClaimInState(lexItemsData, itemId, pId, resp.data.claim)
+            } else if ( workingOn === "sense" ) {
+                tempPayload = addSenseClaimInState(lexItemsData, itemId, pId, resp.data.claim)
+            }
             
             // Dispatching action to set new data
             dispatch({
                 type: SET_LEXITEM_DATA,
-                payload: addClaimInState(lexItemsData, itemId, pId, resp.data.claim)
+                payload: tempPayload
             })
             return Promise.resolve({
                 "status": 1
@@ -185,12 +194,19 @@ export function editClaim(id, p, newValue) {
         dispatch(setBackdrop(false))
 
         if (resp.data["success"]) {
-            let { lexItemsData } = getState()
+            let { lexItemsData, workingOn } = getState()
+
+            let tempPayload;
+            if( workingOn === "property" ){
+                tempPayload = editClaimInState(lexItemsData, id, p, newValue)
+            } else if ( workingOn === "sense" ) {
+                tempPayload = editSenseClaimInState(lexItemsData, id, p, newValue)
+            }
 
             // Dispatching action to set new data
             dispatch({
                 type: SET_LEXITEM_DATA,
-                payload: editClaimInState(lexItemsData, id, p, newValue)
+                payload: tempPayload
             })
             return Promise.resolve({
                 "status": 1,
@@ -230,6 +246,44 @@ export function deleteClaim(id, p) {
             dispatch({
                 type: SET_LEXITEM_DATA,
                 payload: deleteClaimInState(lexItemsData, id, p)
+            })
+            return Promise.resolve({
+                "status": 1
+            })
+        } else {
+            alert("Failed to delete the item :(")
+            return Promise.resolve({
+                "status": 0
+            })
+        }
+    }
+}
+
+export function deleteSense(id) {
+    return async (dispatch, getState) => {
+        const resp = await backendApi.post(
+            '/api/deletesense',
+            {
+                "itemId": id
+            },
+            {
+                crossDomain: true,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+
+        dispatch(setBackdrop(false))
+
+        if (resp.data["success"]) {
+            let { lexItemsData } = getState()
+
+            // Dispatching action to set new data
+            dispatch({
+                type: SET_LEXITEM_DATA,
+                payload: deleteSenseInState(lexItemsData, id)
             })
             return Promise.resolve({
                 "status": 1

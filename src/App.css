@@ -1,3 +1,7 @@
 .typeahead > input, .propertyCellInput {
     height: 3em;
 }
+
+.pId {
+    color: grey;
+}

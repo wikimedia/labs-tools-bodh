@@ -5,8 +5,12 @@ import { useSelector } from 'react-redux'
 import wdSiteApi from './../../api/wikidataSiteApi';
 
 // Component import
+import SenseCell from './SenseCell';
 import PropertyWidget from './Widget/PropertyWidget';
 import EditorWidget from './Widget/EditorWidget';
+
+// UI component
+import Table from 'react-bootstrap/Table';
 
 function Row({ index, itemId, type }) {
     const item = useSelector(s => s.lexItemsData.find(i => i.id === itemId))
@@ -35,7 +39,7 @@ function Row({ index, itemId, type }) {
         if (type === 'form') {
             return (<td></td>)
         } else if (type === 'sense') {
-            return (<td></td>)
+            return (<td><Table><SenseCell itemId={itemId} properties={properties} /></Table></td>)
         } else if (type === 'property') {
             // In case of Lexeme statments, we don't need nested table.
             return (<>{properties.map((p) => getPropsDataCell(p))}</>)

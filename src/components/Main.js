@@ -192,7 +192,7 @@ function Main() {
                         <FormLabel component="legend">I want to work on: </FormLabel>
                         <RadioGroup row value={workOn} onChange={(e) => { dispatch( setWorkingOn(e.target.value) ); }}>
                             <FormControlLabel value="property" control={<Radio />} label="Lexeme statements" />
-                            <FormControlLabel value="sense" disabled control={<Radio />} label="Senses" />
+                            <FormControlLabel value="sense" control={<Radio />} label="Senses" />
                             <FormControlLabel value="form" disabled control={<Radio />} label="Form" />
                         </RadioGroup>
                     </div>
