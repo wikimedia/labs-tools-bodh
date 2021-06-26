@@ -9,7 +9,8 @@ const INIT_STATE = {
     inputLanguage: 'en',
     lexItems: [],
     lexItemsData: [],
-    propCol: []
+    propCol: [],
+    workingOn: 'property'
 }
 
 const store = createStore(rootReducer, INIT_STATE, compose(

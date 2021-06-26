@@ -19,7 +19,13 @@ import DataTable from './DataTable/DataTable'
 
 import WikiApi from '../api/wikiApi';
 
-import { addPropertyCol, removePropertyCol, setDataTableProgress, setLexItems } from './../actions';
+import {
+    addPropertyCol,
+    removePropertyCol,
+    setDataTableProgress,
+    setLexItems,
+    setWorkingOn
+} from './../actions';
 
 
 function a11yProps(index) {
@@ -61,7 +67,7 @@ function Main() {
 
 
     // "Want to work" states, default: property (Lexeme statements)
-    const [workOn, setWorkOn] = useState('property');
+    const workOn = useSelector(s => s.workingOn);
     const [tempColText, setTempColText] = React.useState('');
 
     // Pagination
@@ -184,7 +190,7 @@ function Main() {
                     <br />
                     <div style={{ marginLeft: 10 }}>
                         <FormLabel component="legend">I want to work on: </FormLabel>
-                        <RadioGroup row value={workOn} onChange={(e) => { setWorkOn(e.target.value); }}>
+                        <RadioGroup row value={workOn} onChange={(e) => { dispatch( setWorkingOn(e.target.value) ); }}>
                             <FormControlLabel value="property" control={<Radio />} label="Lexeme statements" />
                             <FormControlLabel value="sense" disabled control={<Radio />} label="Senses" />
                             <FormControlLabel value="form" disabled control={<Radio />} label="Form" />
