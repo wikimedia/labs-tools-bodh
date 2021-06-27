@@ -25,9 +25,6 @@ function App() {
     return (
         <>
             <Header />
-            <Paper>
-                <Typography variant="body1" color="secondary">Currently tool in under development.</Typography>
-            </Paper>
             { isLoggedIn ? <Main /> : <Login/> }
             { backdropProgress ?
                 <Backdrop className={classes.backdrop} open={backdropProgress}>
