@@ -317,6 +317,58 @@ export function deleteClaimInState(lexItemsData, id, p) {
     return temp
 }
 
+export function deleteSenseClaimInState(lexItemsData, id, p) {
+    let temp = [...lexItemsData]
+
+    // Taking j as index to store item path indexes
+    let j, k;
+    temp.find((i, index) => {
+        if (i.id === id.split('-')[0]) {
+            j = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    temp[j].senses.find((i, index) => {
+        if (i.id === id.split('$')[0] ) {
+            k = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    temp[j].senses[k].claims[p.id] = temp[j].senses[k].claims[p.id].filter( it => it.id !== id);
+
+    return temp
+}
+
+export function deleteFormClaimInState(lexItemsData, id, p) {
+    let temp = [...lexItemsData]
+
+    // Taking j as index to store item path indexes
+    let j, k;
+    temp.find((i, index) => {
+        if (i.id === id.split('-')[0]) {
+            j = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    temp[j].forms.find((i, index) => {
+        if (i.id === id.split('$')[0] ) {
+            k = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    temp[j].forms[k].claims[p.id] = temp[j].forms[k].claims[p.id].filter( it => it.id !== id);
+
+    return temp
+}
+
 export function deleteSenseInState(lexItemsData, id) {
     let temp = [...lexItemsData]
 
