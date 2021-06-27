@@ -64,16 +64,16 @@ function AboutDialog({ isOpen, setOpen }) {
           </Typography>
           <ul>
             <li>
-              <a href="https://www.wikidata.org/wiki/User:Magnus_Manske" target="_blank" rel="noreferrer">Magnus Manske</a> <small>(Inspiration from him Tabernacle tool)</small>
+              <a href="https://www.wikidata.org/wiki/User:Magnus_Manske" target="_blank" rel="noreferrer">Magnus Manske</a> <small>(Inspiration from his Tabernacle tool)</small>
             </li>
             <li>
-              <a href="https://www.wikidata.org/wiki/User:Tito_(CIS-A2K)" target="_blank" rel="noreferrer">Tito (CIS-A2K)</a> <small>(Cordinator)</small>
+              <a href="https://www.wikidata.org/wiki/User:Tito_(CIS-A2K)" target="_blank" rel="noreferrer">Tito (CIS-A2K)</a> <small>(Program Manager)</small>
             </li>
             <li>
-              <a href="https://www.wikidata.org/wiki/User:Bodhisattwa_(CIS-A2K)" target="_blank" rel="noreferrer">Bodhisattwa (CIS-A2K)</a> <small>(Wikidata guide)</small>
+              <a href="https://www.wikidata.org/wiki/User:Bodhisattwa_(CIS-A2K)" target="_blank" rel="noreferrer">Bodhisattwa (CIS-A2K)</a> <small>(Wikidata Co-ordinator)</small>
             </li>
             <li>
-              <a href="https://www.wikidata.org/wiki/User:Jay_(CIS-A2K)" target="_blank" rel="noreferrer">Jay (CIS-A2K)</a> <small>(Developer intern)</small>
+              <a href="https://www.wikidata.org/wiki/User:Jay_(CIS-A2K)" target="_blank" rel="noreferrer">Jay (CIS-A2K)</a> <small>(Developer Intern)</small>
             </li>
           </ul>
           <Typography gutterBottom>
