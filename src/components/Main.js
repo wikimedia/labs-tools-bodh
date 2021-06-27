@@ -59,7 +59,7 @@ function Main() {
     // Input mode states
     const [inputModeTab, setInputModeTab] = useState(0);
     const [sp_text, setSpText] = useState( '' ); // SPARQL text
-    const [ml_text, setMlText] = useState('L1399'); // Manual text
+    const [ml_text, setMlText] = useState( '' ); // Manual text
     const lexItems = useSelector(s => s.lexItems);
 
 
@@ -179,7 +179,7 @@ function Main() {
                                 rowsMax={8}
                                 variant="outlined"
                                 value={ml_text}
-                                placeholder="Enter the lexemes list"
+                                placeholder="Enter LIDs one per line"
                                 onChange={(e) => setMlText(e.target.value)}
                             />
                         </TabPanel>
