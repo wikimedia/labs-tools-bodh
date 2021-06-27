@@ -9,7 +9,6 @@ import './App.css';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     backdrop: {
