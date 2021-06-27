@@ -140,6 +140,14 @@ function SensePropertyWidget({ pItem, itemId }) {
         return op.label + ' (' + op.id + ')'
     }
 
+    const filterLabel = (inpt, opt) => {
+        if( inputLanguage === "en"){
+            return 'label'
+        } else {
+            return opt.match.text
+        }
+    }
+
     return (
         <>
             <div>
@@ -148,7 +156,7 @@ function SensePropertyWidget({ pItem, itemId }) {
                     : <Typeahead
                         style={{ marginTop: 2 }}
                         options={options}
-                        filterOption='label'
+                        filterOption={filterLabel}
                         maxVisible={10}
                         value={itemValue}
                         onKeyUp={onTypheadKeyPress}

@@ -88,11 +88,19 @@ function SenseEditorWidget({ itemId, pItem }) {
         return op.label + ' (' + op.id + ')'
     }
 
+    const filterLabel = (inpt, opt) => {
+        if( inputLanguage === "en"){
+            return 'label'
+        } else {
+            return opt.match.text
+        }
+    }
+
     return (
         <Typeahead
             style={{ marginTop: 2 }}
             options={options}
-            filterOption='label'
+            filterOption={filterLabel}
             maxVisible={10}
             onKeyUp={onTypheadKeyPress}
             displayOption={widgetDisplayOption}
