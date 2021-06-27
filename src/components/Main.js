@@ -58,10 +58,7 @@ function Main() {
 
     // Input mode states
     const [inputModeTab, setInputModeTab] = useState(0);
-    const [sp_text, setSpText] = useState(`SELECT ?lexeme ?lemma ?sense ?sensedef {
-	?lexeme wikibase:lemma ?lemma ; dct:language wd:Q9610 ; ontolex:sense ?sense.
-	?sense skos:definition ?sensedef. FILTER(?sensedef = "শিব"@bn).
-}`); // SPARQL text
+    const [sp_text, setSpText] = useState( '' ); // SPARQL text
     const [ml_text, setMlText] = useState('L1399'); // Manual text
     const lexItems = useSelector(s => s.lexItems);
 
