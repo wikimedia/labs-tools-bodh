@@ -36,7 +36,7 @@ function FormCell({ itemId, properties }) {
                 { 
                     item.claims.length === undefined && item.claims[pro.id] ? 
                     item.claims[pro.id].map( (i) => {
-                        return( <tr><FormPropertyWidget itemId={i.id} pItem={pro} /></tr>)
+                        return( <tr key={i.id}><FormPropertyWidget itemId={i.id} pItem={pro} /></tr>)
                     })
                     : null 
                 }

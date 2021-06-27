@@ -105,7 +105,7 @@ function FormPropertyWidget({ pItem, itemId }) {
                 <input disabled value={itemText} className="propertyCellInput" />
                 <div style={{ marginLeft: -30, display: 'inline', zIndex: 999 }}>
                     <b style={{ marginRight: 3, cursor: 'pointer' }} onClick={() => setEditMode(true)}>&#9998;</b>
-                    {/* <b style={{ marginRight: 3, cursor: 'pointer', color: 'red' }} onClick={onDeleteClaim}>✘</b> */}
+                    <b style={{ marginRight: 3, cursor: 'pointer', color: 'red' }} onClick={onDeleteClaim}>✘</b>
                 </div>
             </>
         }

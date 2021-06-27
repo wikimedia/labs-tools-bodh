@@ -36,7 +36,7 @@ function SenseCell({ itemId, properties }) {
                 { 
                     item.claims.length === undefined && item.claims[pro.id] ? 
                     item.claims[pro.id].map( (i) => {
-                        return( <tr><SensePropertyWidget itemId={i.id} pItem={pro} /></tr>)
+                        return( <tr key={i.id}><SensePropertyWidget itemId={i.id} pItem={pro} /></tr>)
                     })
                     : null 
                 }

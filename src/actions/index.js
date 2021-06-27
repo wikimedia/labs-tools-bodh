@@ -8,7 +8,9 @@ import {
     editSenseClaimInState,
     addFormClaimInState,
     editFormClaimInState,
-    deleteFormInState
+    deleteFormInState,
+    deleteSenseClaimInState,
+    deleteFormClaimInState
 } from './../util';
 import backendApi from './../api/backendApi';
 import wdSiteApi from './../api/wikidataSiteApi';
@@ -247,12 +249,21 @@ export function deleteClaim(id, p) {
         dispatch(setBackdrop(false))
 
         if (resp.data["success"]) {
-            let { lexItemsData } = getState()
+            let { lexItemsData, workingOn } = getState()
+
+            let tempPayload;
+            if( workingOn === "property" ){
+                tempPayload = deleteClaimInState(lexItemsData, id, p)
+            } else if ( workingOn === "sense" ) {
+                tempPayload = deleteSenseClaimInState(lexItemsData, id, p)
+            }  else if ( workingOn === "form" ) {
+                tempPayload = deleteFormClaimInState(lexItemsData, id, p)
+            }
 
             // Dispatching action to set new data
             dispatch({
                 type: SET_LEXITEM_DATA,
-                payload: deleteClaimInState(lexItemsData, id, p)
+                payload: tempPayload
             })
             return Promise.resolve({
                 "status": 1
