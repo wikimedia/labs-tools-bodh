@@ -193,7 +193,7 @@ function Main() {
                         <RadioGroup row value={workOn} onChange={(e) => { dispatch( setWorkingOn(e.target.value) ); }}>
                             <FormControlLabel value="property" control={<Radio />} label="Lexeme statements" />
                             <FormControlLabel value="sense" control={<Radio />} label="Senses" />
-                            <FormControlLabel value="form" disabled control={<Radio />} label="Form" />
+                            <FormControlLabel value="form" control={<Radio />} label="Form" />
                         </RadioGroup>
                     </div>
                     <div>

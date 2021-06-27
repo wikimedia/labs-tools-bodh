@@ -141,6 +141,37 @@ export function addSenseClaimInState(lexItemsData, itemId, pId, data) {
 
 }
 
+export function addFormClaimInState(lexItemsData, itemId, pId, data) {
+    let temp = [...lexItemsData]
+    // Taking j as index to store item path indexes
+    let j;
+    temp.find((i, index) => {
+        if (i.id === itemId.split('-')[0]) {
+            j = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    let k;
+    temp[j].forms.find((i, index) => {
+        if (i.id === itemId ) {
+            k = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    try {
+        temp[j].forms[k].claims[pId] = [...temp[j].forms[k].claims[pId], data]
+    } catch {
+        temp[j].forms[k].claims[pId] = [data]
+    }
+
+    return temp
+
+}
+
 /**
  * Edit lexeme statment's data
  * @param  {object} lexItemsData Lexeme's item data in redux state
@@ -220,6 +251,47 @@ export function editSenseClaimInState(lexItemsData, id, p, newValue) {
     return temp
 }
 
+
+export function editFormClaimInState(lexItemsData, id, p, newValue) {
+    let temp = [ ...lexItemsData ];
+
+    // Taking j, k and m as index to store item path indexes
+    let j, k, m;
+    temp.find((i, index) => {
+        if (i.id === id.split('-')[0]) {
+            j = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    temp[j].forms.find((i, index) => {
+        if (i.id === id.split('$')[0] ) {
+            k = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    temp[j].forms[k].claims[p.id].find( (i, index) => {
+        if (i.id === id ) {
+            m = index; // Storing index to use later
+            return true
+        }
+        return false
+    });
+
+    //  Modifing the record in large state object
+    if (p.type === "wikibase-lexeme" || p.type === "wikibase-item") {
+        temp[j].forms[k].claims[p.id][m].mainsnak.datavalue.value.id = newValue.id
+        temp[j].forms[k].claims[p.id][m].mainsnak.datavalue.value["numeric-id"] = parseInt(newValue.id.slice(1))
+    } else {
+        temp[j].forms[k].claims[p.id][m].mainsnak.datavalue.value = newValue
+    }
+
+    return temp
+}
+
 /**
  * Delete lexeme statment's data
  * @param  {object} lexItemsData Lexeme's item data in redux state
@@ -259,6 +331,24 @@ export function deleteSenseInState(lexItemsData, id) {
     })
 
     temp[j].senses = tempItem.senses.filter( it => it.id !== id)
+
+    return temp
+}
+
+export function deleteFormInState(lexItemsData, id) {
+    let temp = [...lexItemsData]
+
+    // Taking j as index to store item path indexes
+    let j;
+    let tempItem = lexItemsData.find((k, index) => {
+        if (k.id === id.split("-")[0]) {
+            j = index; // Storing index to use later
+            return true
+        }
+        return false
+    })
+
+    temp[j].forms = tempItem.forms.filter( it => it.id !== id)
 
     return temp
 }

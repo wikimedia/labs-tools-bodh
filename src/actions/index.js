@@ -5,7 +5,10 @@ import {
     deleteClaimInState,
     deleteSenseInState,
     addSenseClaimInState,
-    editSenseClaimInState
+    editSenseClaimInState,
+    addFormClaimInState,
+    editFormClaimInState,
+    deleteFormInState
 } from './../util';
 import backendApi from './../api/backendApi';
 import wdSiteApi from './../api/wikidataSiteApi';
@@ -154,6 +157,8 @@ export function createClaim(itemId, pId, type, value) {
                 tempPayload = addClaimInState(lexItemsData, itemId, pId, resp.data.claim)
             } else if ( workingOn === "sense" ) {
                 tempPayload = addSenseClaimInState(lexItemsData, itemId, pId, resp.data.claim)
+            }  else if ( workingOn === "form" ) {
+                tempPayload = addFormClaimInState(lexItemsData, itemId, pId, resp.data.claim)
             }
             
             // Dispatching action to set new data
@@ -201,6 +206,8 @@ export function editClaim(id, p, newValue) {
                 tempPayload = editClaimInState(lexItemsData, id, p, newValue)
             } else if ( workingOn === "sense" ) {
                 tempPayload = editSenseClaimInState(lexItemsData, id, p, newValue)
+            }  else if ( workingOn === "form" ) {
+                tempPayload = editFormClaimInState(lexItemsData, id, p, newValue)
             }
 
             // Dispatching action to set new data
@@ -284,6 +291,44 @@ export function deleteSense(id) {
             dispatch({
                 type: SET_LEXITEM_DATA,
                 payload: deleteSenseInState(lexItemsData, id)
+            })
+            return Promise.resolve({
+                "status": 1
+            })
+        } else {
+            alert("Failed to delete the item :(")
+            return Promise.resolve({
+                "status": 0
+            })
+        }
+    }
+}
+
+export function deleteForm(id) {
+    return async (dispatch, getState) => {
+        const resp = await backendApi.post(
+            '/api/deleteform',
+            {
+                "itemId": id
+            },
+            {
+                crossDomain: true,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+
+        dispatch(setBackdrop(false))
+
+        if (resp.data["success"]) {
+            let { lexItemsData } = getState()
+
+            // Dispatching action to set new data
+            dispatch({
+                type: SET_LEXITEM_DATA,
+                payload: deleteFormInState(lexItemsData, id)
             })
             return Promise.resolve({
                 "status": 1

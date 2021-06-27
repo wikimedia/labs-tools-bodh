@@ -6,6 +6,7 @@ import wdSiteApi from './../../api/wikidataSiteApi';
 
 // Component import
 import SenseCell from './SenseCell';
+import FormCell from './FormCell';
 import PropertyWidget from './Widget/PropertyWidget';
 import EditorWidget from './Widget/EditorWidget';
 
@@ -37,7 +38,7 @@ function Row({ index, itemId, type }) {
 
     const getTableRowBody = () => {
         if (type === 'form') {
-            return (<td></td>)
+            return (<td><Table><FormCell itemId={itemId} properties={properties} /></Table></td>)
         } else if (type === 'sense') {
             return (<td><Table><SenseCell itemId={itemId} properties={properties} /></Table></td>)
         } else if (type === 'property') {

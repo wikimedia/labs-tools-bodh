@@ -7,10 +7,10 @@ import { Typeahead } from 'react-typeahead';
 
 import { setBackdrop, editClaim, deleteClaim } from '../../../actions';
 
-function SensePropertyWidget({ pItem, itemId }) {
+function FormPropertyWidget({ pItem, itemId }) {
     const dispatch = useDispatch()
     let itemTemp = useSelector(s => s.lexItemsData.find(i => i.id === itemId.split("$")[0].split('-')[0]))
-    let item = itemTemp.senses.find( k => k.id === itemId.split('$')[0])
+    let item = itemTemp.forms.find( k => k.id === itemId.split('$')[0])
     
     const itemMainsnak = item.claims[pItem.id].find(i => i.id === itemId).mainsnak
     const itemType = itemMainsnak.datatype
@@ -160,4 +160,4 @@ function SensePropertyWidget({ pItem, itemId }) {
         </>
     )
 }
-export default SensePropertyWidget;
+export default FormPropertyWidget;
