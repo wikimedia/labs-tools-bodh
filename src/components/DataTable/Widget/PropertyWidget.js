@@ -17,7 +17,7 @@ function PropertyWidget({ pItem, itemId }) {
     let itemDataValue;
     if (itemType === "wikibase-lexeme" || itemType === "wikibase-item") {
         itemDataValue = itemMainsnak.datavalue.value.id
-    } else if (itemType === "string") {
+    } else if (itemType === "string" || itemType === "external-id") {
         itemDataValue = itemMainsnak.datavalue.value
     }
 
@@ -67,7 +67,10 @@ function PropertyWidget({ pItem, itemId }) {
         }
 
         // Property having string nature can be edit by Enter
-        if (e.key === "Enter" && pItem.type === "string") {
+        if (
+            e.key === "Enter" &&
+            ( pItem.type === "string" || pItem.type === "external-id" )
+        ) {
             onEditClaim(newValue)
         }
     }
@@ -99,7 +102,12 @@ function PropertyWidget({ pItem, itemId }) {
     }
 
     const getCellContent = () => {
-        if (pItem.type === "string" || pItem.type === "wikibase-item" || pItem.type === "wikibase-lexeme") {
+        if (
+            pItem.type === "string" ||
+            pItem.type === "external-id" ||
+            pItem.type === "wikibase-item" ||
+            pItem.type === "wikibase-lexeme"
+        ) {
             return <>
                 <input disabled value={itemText} className="propertyCellInput" />
                 <div style={{ marginLeft: -30, display: 'inline', zIndex: 999 }}>

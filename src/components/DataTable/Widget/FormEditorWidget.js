@@ -56,7 +56,10 @@ function FormEditorWidget({ itemId, pItem }) {
                     setOptions(data.search)
                 })
             }
-        } else if (pItem.type === 'string' && e.key === 'Enter') {
+        } else if (
+            e.key === 'Enter' &&
+            (pItem.type === 'string' || pItem.type === 'external-id')
+        ) {
             createClaimById(newValue, pItem.type);
         }
     }

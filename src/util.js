@@ -22,7 +22,7 @@ export function getTypeByString(item) {
  * @return  {boolean}
  */
 export function allowProperties(item) {
-    return ['wikibase-item', 'wikibase-lexeme', 'string'].includes(item)
+    return ['wikibase-item', 'wikibase-lexeme', 'string', 'external-id'].includes(item)
 }
 
 /**
