@@ -417,6 +417,7 @@ export function deleteFormInState(lexItemsData, id) {
         'en',
         'fr',
         'gu',
+        'he',
         'hi',
         'kn',
         'ml',
